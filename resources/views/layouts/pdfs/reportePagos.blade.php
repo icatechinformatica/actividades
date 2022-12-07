@@ -109,7 +109,7 @@
                         <br>INSTITUTO DE CAPACITACIÓN Y
                         <br>VINCULACIÓN TECNOLÓGICA DEL ESTADO DE CHIAPAS
                     </h6>
-                    <h6>"2021, Año de la Independencia"</h6>
+                    <h6>"2022, Año de Ricardo Flores Magón"</h6>
                 </b>
             </div>
         </div>

@@ -25,7 +25,7 @@
                 VALIDACIÓN DE ACTIVIDADES POR ÓRGANO ADMINISTRATIVO
             </div>
             <div class="card-body">
-                <form action="{{ route('vtoBueno.inicio') }}" method="get">
+                <form id="formGetData" action="{{ route('vtoBueno.inicio') }}" method="get">
                     @csrf
 
                     <div class="row">
@@ -37,7 +37,26 @@
                         </div>
                     </div>
 
-                    <div class="row mt-2">
+                    <div class="row my-2">
+                        <div class="col-3">Ejercicio</div>
+                        <div class="col-4">
+                            <select class="custom-select" id="ejercicio" name="ejercicio">
+                                {{-- <option value=''>Seleccione...</option> --}}
+                                <option {{ $ejercicio == '2021' ? 'selected' : '' }}>2021</option>
+                                <option {{ ($ejercicio == '2022' || $ejercicio == null) ? 'selected' : '' }}>2022</option>
+                                <option {{ $ejercicio == '2023' ? 'selected' : '' }}>2023</option>
+                                <option {{ $ejercicio == '2024' ? 'selected' : '' }}>2024</option>
+                                <option {{ $ejercicio == '2025' ? 'selected' : '' }}>2025</option>
+                                <option {{ $ejercicio == '2026' ? 'selected' : '' }}>2026</option>
+                                <option {{ $ejercicio == '2027' ? 'selected' : '' }}>2027</option>
+                                <option {{ $ejercicio == '2028' ? 'selected' : '' }}>2028</option>
+                                <option {{ $ejercicio == '2029' ? 'selected' : '' }}>2029</option>
+                                <option {{ $ejercicio == '2030' ? 'selected' : '' }}>2030</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-3">Semana</div>
                         <div class="col-4">
                             <input class="form-control" type="number" name="semana" id="semana" placeholder="Semana"
@@ -262,6 +281,17 @@
             $('#status').val(actividad['status']);
             $('#tipo_actividad').val(actividad['tipo_actividad']);
         }
+
+        $('#formGetData').validate({
+            rules: {
+                ejercicio: { required: true },
+                semana: { required: true }
+            },
+            messages: {
+                ejercicio: { required: 'Seleccione el ejercicio!' },
+                semana: { required: 'Seleccione la semana!' }
+            }
+        });
 
     </script>
 @endsection

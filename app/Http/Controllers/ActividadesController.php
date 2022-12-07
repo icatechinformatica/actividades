@@ -21,8 +21,10 @@ class ActividadesController extends Controller {
 
         if ($request->busqueda != null) {
             session(['semana' => $request->busqueda]);
+            session(['ejercicioA' => $request->ejercicio]);
         }
         $semana = session('semana');
+        $ejercicio = session('ejercicioA');
         // $actividad2 = session('actividad2');
 
         $showModify = 'false';
@@ -43,14 +45,14 @@ class ActividadesController extends Controller {
             $show = 'true';
         }
 
-
         $actividades = Actividades::where('semana', '=', $semana)
             ->where('actividades.area_responsable', '=', $responsable)
+            ->whereYear('fecha', $ejercicio)
             ->leftjoin('organos', 'actividades.area_responsable', '=', 'organos.id')
             ->select('actividades.*', 'organos.descripcion')
             ->orderByDesc('actividades.id')
             ->get();
-        return view('layouts.inicioActividades', compact('organos','actividades', 'semana', 'showModify', 'show'));
+        return view('layouts.inicioActividades', compact('organos','actividades', 'semana', 'showModify', 'show', 'ejercicio'));
     }
 
     public function store(Request $request) {
@@ -106,13 +108,19 @@ class ActividadesController extends Controller {
         return redirect()->route('actividades.inicio')->with('success', 'ACTIVIDAD ELIMINADA EXITOSAMENTE');
     }
 
-    public function send(Request $request) {
-        $date = date('Y-m-d');
-        Actividades::where('semana', '=', $request->semanaE)
-            ->update([
-                'fecha_enviado' => $date
-            ]);
-        return redirect()->route('actividades.inicio')->with('success', sprintf('ACTIVIDADES DE LA SEMANA %s ENVIADAS CORRECTAMENTE', $request->semanaE));
+    public function send() {
+        $semana = session('semana');
+        if ($semana) {
+            $date = date('Y-m-d');
+            Actividades::where('semana', '=', $semana)
+                ->where('iduser_created', Auth::user()->id)
+                ->update([
+                    'fecha_enviado' => $date
+                ]);
+            return redirect()->route('actividades.inicio')->with('success', sprintf('ACTIVIDADES DE LA SEMANA %s ENVIADAS CORRECTAMENTE', $semana));
+        } else {
+            return redirect()->route('actividades.inicio')->with('success', sprintf('Ocurrio un error! intentelo de nuevo'));
+        }
     }
 
     public function update2(Request $request) {

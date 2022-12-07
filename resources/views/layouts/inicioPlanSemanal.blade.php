@@ -34,7 +34,7 @@
                         <div class="col-4">
                             <select id="ejercicio" name="ejercicio" class="form-control">
                                 <option {{$ejercicio == '2021' ? 'selected' : ''}} value="2021">2021</option>
-                                <option {{$ejercicio == '2022' ? 'selected' : ''}} value="2022">2022</option>
+                                <option {{($ejercicio == '2022' || $ejercicio == null) ? 'selected' : ''}} value="2022">2022</option>
                                 <option {{$ejercicio == '2023' ? 'selected' : ''}} value="2023">2023</option>
                                 <option {{$ejercicio == '2024' ? 'selected' : ''}} value="2024">2024</option>
                                 <option {{$ejercicio == '2025' ? 'selected' : ''}} value="2025">2025</option>
@@ -48,7 +48,7 @@
                     </div>
 
                     {{-- mes --}}
-                    <div class="row mt-2">
+                    {{-- <div class="row mt-2">
                         <div class="col-3">Mes</div>
                         <div class="col-4">
                             <select name="mes" class="form-control" id="mes">
@@ -67,7 +67,7 @@
                                 <option {{$mes == '12' ? 'selected' : ''}} value="12">Diciembre</option>
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- direccion --}}
                     <div class="row mt-2">

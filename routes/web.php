@@ -24,7 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/Actividades/inicio', 'ActividadesController@index')->name('actividades.inicio');
 Route::post('/Actividades/guardar', 'ActividadesController@store')->name('actividades.store');
 Route::get('/Actividades/{id}/{semana}', 'ActividadesController@destroy')->name('actividades.destroy');
-Route::post('/Actividades/enviar', 'ActividadesController@send')->name('actividades.enviar');
+Route::get('/Actividades/enviar', 'ActividadesController@send')->name('actividades.enviar');
 Route::post('/Actividades/editar/{id}/{semana}', 'ActividadesController@update')->name('actividades.editar');
 Route::post('/Actividades/editar2', 'ActividadesController@update2')->name('actividades.editar2');
 
@@ -37,7 +37,8 @@ Route::post('/Validaciones/enviar', 'ValidacionController@store')->name('validac
 
 Route::get('/plan/inicio', 'PlanSemanalController@index')->name('plan.inicio');
 Route::post('/plan/editar/{id}', 'PlanSemanalController@update')->name('plan.editar');
-Route::get('/plan/reporte/{ejercicio}/{mes}/{direccion}/{semana}', 'PlanSemanalController@reporteSemanal')->name('planSemanal.reporte');
+Route::get('/plan/reporte/{ejercicio}/{direccion}/{semana}', 'PlanSemanalController@reporteSemanal')->name('planSemanal.reporte');
+// {mes}/
 
 Route::get('/Registro/inicio', 'RegistroController@index')->name('registro.inicio');
 Route::post('/Registro/enviar', 'RegistroController@store')->name('registro.enviar');

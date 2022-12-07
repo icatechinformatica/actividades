@@ -24,15 +24,18 @@ class ValidacionController extends Controller {
             session(['administrativo' => $request->area]);
             session(['semana2' => $request->semana]);
             session(['actividad22' => $request->actividad2]);
+            session(['ejercicioVV' => $request->ejercicio]);
         }
         $administrativo = session('administrativo');
         $semana = session('semana2');
         $actividad2 = session('actividad22');
+        $ejercicio = session('ejercicioVV');
 
         if ($actividad2 == null) {
             $actividades = Actividades::where('id_departamento', '=', $administrativo)
                 ->where('semana', '=', $semana)
                 ->where('fecha_vToBueno', '!=', null)
+                ->whereYear('fecha', $ejercicio)
                 ->leftjoin('organos', 'actividades.area_responsable', '=', 'organos.id')
                 ->select('actividades.*', 'organos.descripcion')
                 ->orderByRaw('status_validacion desc')
@@ -42,12 +45,13 @@ class ValidacionController extends Controller {
             ->where('semana', '=', $semana)
             ->where('tipo_actividad', '=', $actividad2)
             ->where('fecha_vToBueno', '!=', null)
+            ->whereYear('fecha', $ejercicio)
             ->leftjoin('organos', 'actividades.area_responsable', '=', 'organos.id')
             ->select('actividades.*', 'organos.descripcion')
             ->orderByRaw('status_validacion desc')
             ->get();
         }
-        return view('layouts.inicioValidacion', compact('organo', 'areas', 'actividades', 'administrativo', 'semana', 'actividad2'));
+        return view('layouts.inicioValidacion', compact('organo', 'areas', 'actividades', 'administrativo', 'semana', 'actividad2', 'ejercicio'));
     }
 
     public function store(Request $request) {

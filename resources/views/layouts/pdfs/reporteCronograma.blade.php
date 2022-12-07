@@ -110,7 +110,7 @@
                         <br>CURSOS PARA PAGO DE HONORARIOS-MODALIDAD: CAPACITACIÓN A DISTANCIA
                         <br>CRONOGRAMA DE PAGOS POR UNIDAD DE CAPACITACIÓN (VALIDADOS EN EL SISTEMA SIVYC)
                     </h6>
-                    <h6>"2021, Año de la Independencia"</h6>
+                    <h6>"2022, Año de Ricardo Flores Magón"</h6>
                 </b>
             </div>
         </div>

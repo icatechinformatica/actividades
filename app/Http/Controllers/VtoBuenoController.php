@@ -28,9 +28,11 @@ class VtoBuenoController extends Controller {
         if ($request->semana != null) {
             session(['semana2' => $request->semana]);
             session(['actividad2' => $request->actividad2]);
+            session(['ejercicioV' => $request->ejercicio]);
         }
         $semana = session('semana2');
         $actividad2 = session('actividad2');
+        $ejercicio = session('ejercicioV');
 
         $date = Carbon::now()->timezone('America/Monterrey');
         $day = Carbon::parse($date->toDateString())->format('l');
@@ -47,6 +49,7 @@ class VtoBuenoController extends Controller {
             $actividades = Actividades::where('id_departamento', '=', $organo1)
                 ->where('semana', '=', $semana)
                 ->where('fecha_enviado', '!=', null)
+                ->whereYear('fecha', $ejercicio)
                 ->leftjoin('organos', 'actividades.area_responsable', '=', 'organos.id')
                 ->select('actividades.*', 'organos.descripcion')
                 ->orderByRaw('status_vtoBueno desc')
@@ -56,12 +59,13 @@ class VtoBuenoController extends Controller {
                 ->where('semana', '=', $semana)
                 ->where('tipo_actividad', '=', $actividad2)
                 ->where('fecha_enviado', '!=', null)
+                ->whereYear('fecha', $ejercicio)
                 ->leftjoin('organos', 'actividades.area_responsable', '=', 'organos.id')
                 ->select('actividades.*', 'organos.descripcion')
                 ->orderByRaw('status_vtoBueno desc')
                 ->get();
         }
-        return view('layouts.inicioVtoBueno', compact('organo', 'areas', 'semana', 'actividades', 'actividad2', 'show'));
+        return view('layouts.inicioVtoBueno', compact('organo', 'areas', 'semana', 'actividades', 'actividad2', 'show', 'ejercicio'));
     }
 
     public function store(Request $request, $semana) {

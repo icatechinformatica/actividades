@@ -42,7 +42,7 @@ class PlanSemanalController extends Controller {
         if ($request->ejercicio != null){
             $actividades = DB::table('actividades')
             ->whereYear('fecha', $request->ejercicio)
-            ->whereMonth('fecha', $request->mes)
+            // ->whereMonth('fecha', $request->mes)
             ->where('id_departamento', '=', $request->area)
             ->where('semana', '=', $request->semana)
             ->where('fecha_validacion', '!=', null)
@@ -103,7 +103,8 @@ class PlanSemanalController extends Controller {
         return back()->withInput()->with('success', 'SE GUARDARON LOS CAMBIOS CORRECTAMENTE');
     }
 
-    public function reporteSemanal($ejercicio, $mes, $direccion, $semana) {
+    public function reporteSemanal($ejercicio, $direccion, $semana) {
+        // $mes,
         $direccion2 = organo::where('id', '=', $direccion)->get();
 
         if ($direccion == 2) {
@@ -116,7 +117,7 @@ class PlanSemanalController extends Controller {
         if ($ejercicio != null){
             $actividades = DB::table('actividades')
                 ->whereYear('fecha', $ejercicio)
-                ->whereMonth('fecha', $mes)
+                // ->whereMonth('fecha', $mes)
                 ->where('id_departamento', '=', $direccion)
                 ->where('semana', '=', $semana)
                 ->where('fecha_validacion', '!=', null)
