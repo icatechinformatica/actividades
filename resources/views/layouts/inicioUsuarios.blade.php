@@ -4,7 +4,7 @@
 
 @section('css')
     <style>
-        .colorTop { 
+        .colorTop {
             background-color: #541533;
         }
     </style>

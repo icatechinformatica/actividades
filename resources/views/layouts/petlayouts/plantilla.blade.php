@@ -1,0 +1,77 @@
+<table>
+    <thead>
+        <tr>
+            <th>2022-05-13</th>
+            <th>2022-05-14</th>
+            <th>2022-05-15</th>
+            <th>2022-05-16</th>
+            <th>2022-05-17</th>
+            <th>2022-05-18</th>
+            <th>2022-05-19</th>
+            <th>2022-05-20</th>
+            <th>2022-05-21</th>
+            <th>2022-05-22</th>
+            <th>2022-05-23</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="event-cell" colspan="1" style="background-color: #4287f5;"><span>80% done</span>Action 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="event-cell" colspan="3" style="background-color: #c1409b;"><span>10% done</span>Action 2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="event-cell" colspan="4" style="background-color: #0b9971;"><span>20% done</span>Action 3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="event-cell" colspan="5" style="background-color: #d26a52;"><span>55% done</span>Action 4</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="event-cell" colspan="4" style="background-color: #4287f5;"><span>100% done</span>Action 5</td>
+        </tr>
+        <tr>
+            <td class="event-cell" colspan="9" style="background-color: #0b9971;"><span>32% done</span>Action 6</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

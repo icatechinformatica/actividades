@@ -232,7 +232,7 @@ return [
             'search' => true,
             'topnav' => true,
         ],*/
-        
+
         [
             'text' => 'Agregar actividad',
             'route'  => 'actividades.inicio',
@@ -258,6 +258,20 @@ return [
             'text' => 'Plan Semanal',
             'route'  => 'plan.inicio',
             'icon' => 'fa fa-calendar-o',
+            'can' => 'plan.inicio',
+            'icon_color' => 'color_icono'
+        ],
+        [
+            'text' => 'PET Actividades',
+            'route' => 'pet.actividades.index',
+            'icon' => 'fa fa-list-alt',
+            'can' => 'plan.inicio',
+            'icon_color' => 'color_icono'
+        ],
+        [
+            'text' => 'PET Entrega Recepción',
+            'route' => 'pet.index',
+            'icon' => 'fa fa-area-chart',
             'can' => 'plan.inicio',
             'icon_color' => 'color_icono'
         ],
