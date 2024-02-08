@@ -14,4 +14,6 @@ interface PetSeguimientoProcesoInterface
     public function saveSubject(Request $request);
     public function getSubject();
     public function saveActivity(Request $request);
+    public function getSemana();
+    public function saveCatSemana(Request $request);
 }

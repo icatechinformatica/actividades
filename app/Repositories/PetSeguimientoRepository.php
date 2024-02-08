@@ -188,4 +188,24 @@ class PetSeguimientoRepository implements PetSeguimientoProcesoInterface
         $activity->save();
         return true;
     }
+
+    public function getSemana(): Object
+    {
+        return CatSemanas::paginate(10);
+    }
+
+    public function saveCatSemana($request)
+    {
+        $semana = new CatSemanas();
+        $semana->fill([
+            'semana' => $request['semana'],
+            'inicio' => $request['fechaInicio'],
+            'fin' => $request['fechaFin'],
+            'ejercicio' => $request['ejercicio'],
+            'activo' => (!isset($request['activo']) || $request['activo'] === null) ? 0 : 1,
+        ]);
+
+        return $semana->save();
+
+    }
 }

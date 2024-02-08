@@ -32,8 +32,7 @@
             border-right: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        .gantt__row-head {
-            background-color: #B2A9A8;
+        tbody tr td {
             border-width: 1px 0 0 0;
             border-color: rgba(0, 0, 0, 0.1);
             border-style: solid;
@@ -49,6 +48,16 @@
             font-size: 12px;
             padding: 5px 4px;
         }
+
+        input.error {
+            background-color: ivory;
+            border: 1px solid red;;
+            outline: 1px solid red;
+            border-radius: 4px;
+        }
+        label.error {
+            color:#770723
+        }
     </style>
 @endsection
 
@@ -60,59 +69,48 @@
             </div>
         @endif
         <div class="card">
-            <div class="card-header">Catálogo de Actividades</div>
+            <div class="card-header">Catálogo de Semanas</div>
             <div class="card-body">
                 <div class="col-12">
-                    <button type="button" class="btn btn-primary" onclick="NuevaFunction()">Agregar
-                        Asuntos</button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#addActivityModal">Agregar Actividades</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Agregar Semana
+                    </button>
                 </div>
                 <br>
                 <div class="col-12">
                     <table class="main">
                         <thead>
                             <tr>
-                                <th>Actividad</th>
-                                <th>Fecha</th>
-                                <th>Usuario Crea</th>
-                                <th>Usuario Modifica</th>
+                                <th>Semana</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Ejercicio</th>
                                 <th>Más</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($asuntoActividades as $k => $v)
-                                <tr class="gantt__row-head">
-                                    <td colspan="14">{{ $v->asunto }}</td>
+                            @foreach ($catSemanas as $k => $v)
+                                @php
+                                    $fechaInicio = Carbon\Carbon::parse($v->inicio);
+                                    $fechaFin = Carbon\Carbon::parse($v->fin);
+                                @endphp
+                                <tr>
+                                    <td>{{ $v->semana }}</td>
+                                    <td>{{ $fechaInicio->format('d-m-Y') }}</td>
+                                    <td>{{ $fechaFin->format('d-m-Y') }}</td>
+                                    <td>{{ $v->ejercicio }}</td>
+                                    <td></td>
                                 </tr>
-                                @foreach ($v->actividades as $key)
-                                    @php
-                                        $actividad = $key->id;
-                                        $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                                        $fecha = Carbon\Carbon::parse($key->created_at);
-                                        $mes = $meses[$fecha->format('n') - 1];
-                                        $fechaCreado = $fecha->format('d') . ' de ' . $mes . ' ' . $fecha->format('Y');
-                                    @endphp
-                                    <tr>
-                                        <td class="activity">
-                                            {{ $key->actividad }}
-                                        </td>
-                                        <td>{{ $fechaCreado }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                @endforeach
                             @endforeach
                         </tbody>
                     </table>
+                    <br>
+                    {{ $catSemanas->links() }}
                 </div>
             </div>
         </div>
         {{-- incluir modal de inserción de datos --}}
-        @include('layouts.modal.asunto_add')
-        {{-- modal de actividades  --}}
-        @include('layouts.modal.add_activity_modal')
+        @include('layouts.modal.add_semana_modal')
     </div>
 @endsection
 @section('js')
@@ -128,69 +126,37 @@
             }
         });
 
-        function NuevaFunction() {
-            $('#asuntoAddModal').modal('show');
-        }
-
         function nuevaActividad() {
             $('#addActivityModal').modal('show');
         }
 
         $(document).ready(function() {
-            $('#agregarAsunto').on('click', function(e) {
-                e.preventDefault();
-                const formData = new FormData($('#frmModalSubject')[0]);
-                const urlData = "{{ route('pet.subject.store') }}";
-                $.ajax({
-                    url: urlData,
-                    type: 'POST',
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    beforeSend: function() {
-                        // procesar antes de enviar
-                        $('#frmModalSubject').attr('disabled',
-                            'disabled'); // deshabilitar el formulario
-                    },
-                    success: function(res) {
-                        let formModal = $('#frmModalSubject');
-                        formModal?.attr('disabled',
-                            false); // el formulario se habilita nuevamente
-                        formModal?.trigger("reset"); // resetear formulario
-                        $('#asuntoAddModal').modal('hide'); // ocultar modal
-                        window.location.href =
-                            "{{ route('pet.actividades.index') }}"; // redirect
-                    },
-                    error: function(xhr, textStatus, error) {
-                        console.log(xhr.statusText);
-                        console.log(xhr.responseText);
-                        console.log(xhr.status);
-                        console.log(textStatus);
-                        console.log(error);
-                    }
-                });
-            });
 
-
-            const form = $('#frmActivyty');
+            const form = $('#frmAddSemana');
 
             form.validate({
                 errorClass: "error",
                 rules: {
-                    asunto: {
+                    semana: {
                         required: true
                     },
-                    actividad: {
-                        required: true
+                    fechaInicio: {
+                        required: true,
+                        date: true
+                    },
+                    ejercicio: {
+                        required: true,
                     }
                 },
                 messages: {
-                    asunto: {
-                        required: "El Asunto es requerido"
+                    semana: {
+                        required: "La Semana es requerido"
                     },
-                    actividad: {
-                        required: "La Actividad es requerida",
+                    fechaInicio: {
+                        required: "La Fecha de Inicio es requerida",
+                    },
+                    ejercicio: {
+                        required: "El ejercio es requerido"
                     }
                 },
                 highlight: function(element, errorClass) {
@@ -198,25 +164,26 @@
                 },
                 submitHandler: function(form, event) {
                     event.preventDefault();
-                    const frmdata = new FormData($('#frmActivyty')[0]);
+                    const frmdata = new FormData($('#frmAddSemana')[0]);
                     $.ajax({
                         method: "POST",
                         dataType: "json",
                         processData: false,
                         contentType: false,
                         data: frmdata,
-                        url: "{{ route('pet.activity.store') }}",
+                        url: "{{ route('pet.semana.store') }}",
                         beforeSend: function() {
                             // procesar antes de enviar
-                            $('#frmActivyty').attr('disabled',
+                            $('#frmAddSemana').attr('disabled',
                                 'disabled'); // deshabilitar el formulario
                         },
                         success: function(data) {
+                            console.log(data);
                             $('#addActivityModal').modal('hide'); // cerrar el modal
                             // resetear formulario del modal
-                            $('#frmActivyty')[0].reset();
+                            $('#frmAddSemana')[0].reset();
                             //redireccionar
-                            window.location.href = "{{ route('pet.actividades.index') }}";
+                            window.location.href = "{{ route('pet.semana.index') }}";
                         },
                         error: function(xhr, textStatus, error) {
                             // manejar errores
